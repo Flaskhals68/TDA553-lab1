@@ -7,38 +7,31 @@ import org.junit.Test;
 import main.Car;
 import main.Saab95;
 import main.Volvo240;
-import main.Car.Direction;
 
 public class TestCar {
-
-    // private enum Direction {
-    //     UP,
-    //     LEFT,
-    //     RIGHT,
-    //     DOWN,
-    // }
-
     @Test
     public void move() {
         Volvo240 volvo = new Volvo240(0, 0);
-        volvo.setCurrentSpeed(1);
+        // volvo.setCurrentSpeed(1);
+        volvo.gas(1);
         volvo.move();
         System.out.println(volvo.getDirection());
-        assertEquals(1, volvo.getY(), 0.01);
+        assertEquals(1.25, volvo.getY(), 0.01);
 
-        volvo.setDierction(Car.Direction.RIGHT);
+        volvo.turnRight();
         volvo.move();
-        assertEquals(1, volvo.getX(), 0.01);
+        assertEquals(1.25, volvo.getX(), 0.01);
 
         Saab95 saab = new Saab95(0, 0);
-        saab.setCurrentSpeed(1);
-        saab.setDierction(Car.Direction.DOWN);
+        saab.gas(0.5);
+        saab.turnRight();
+        saab.turnRight();
         saab.move();
-        assertEquals(-1, saab.getY(), 0.01);
+        assertEquals(-0.625, saab.getY(), 0.001);
 
-        saab.setDierction(Car.Direction.LEFT);
+        saab.turnRight();
         saab.move();
-        assertEquals(-1, saab.getX(), 0.01);
+        assertEquals(-0.625, saab.getX(), 0.001);
     }
     
     public void turnRight() {
@@ -69,26 +62,40 @@ public class TestCar {
     @Test
     public void brake(){
         Volvo240 volvo = new Volvo240(0, 0);
-        volvo.setCurrentSpeed(1);
+        volvo.gas(1);
         volvo.brake(1);
         assertEquals(0, volvo.getCurrentSpeed(), 0.01);
 
         Saab95 saab = new Saab95(0, 0);
-        saab.setCurrentSpeed(1);
-        saab.brake(1);
-        assertEquals(-0.25, saab.getCurrentSpeed(), 0.01);
+        saab.gas(0.5);
+        saab.brake(0.25);
+        assertEquals(0.3125, saab.getCurrentSpeed(), 0.0001);
     }
     
     @Test
     public void gas() {
         Volvo240 volvo = new Volvo240(0, 0);
-        volvo.setCurrentSpeed(1);
-        volvo.gas(0.2);
+        volvo.gas(1);
         assertEquals(1.25, volvo.getCurrentSpeed(), 0.01);
 
         Saab95 saab = new Saab95(0, 0);
-        saab.setCurrentSpeed(1);
         saab.gas(0.75);
-        assertEquals(1.9375, saab.getCurrentSpeed(), 0.0001);
+        assertEquals(0.9375, saab.getCurrentSpeed(), 0.0001);
+
+        boolean success = true;
+        try {
+            volvo.gas(-1);
+        } catch (IllegalArgumentException e) {
+            success = false;
+        }
+        assertEquals(false, success);
+
+        success = true;
+        try {
+            saab.gas(-1);
+        } catch (IllegalArgumentException e) {
+            success = false;
+        }
+        assertEquals(false, success);
     }
 }

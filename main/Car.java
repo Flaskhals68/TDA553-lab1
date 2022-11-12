@@ -1,8 +1,5 @@
 package main;
 import java.awt.*;
-import java.util.Dictionary;
-
-import org.junit.Test;
 
 public abstract class Car implements Movable {
     private int nrDoors; // Number of doors on the car
@@ -25,13 +22,13 @@ public abstract class Car implements Movable {
         stopEngine();
     }
     
-    public enum Direction { // Change to private
+    public enum Direction {
         UP,
         LEFT,
         RIGHT,
         DOWN,
     }
-
+    
     protected abstract void incrementSpeed(double amount);
 
     protected abstract void decrementSpeed(double amount);
@@ -58,7 +55,7 @@ public abstract class Car implements Movable {
         return currentSpeed;
     }
 
-    public void setCurrentSpeed(double newCurrentSpeed){
+    protected void setCurrentSpeed(double newCurrentSpeed){
         currentSpeed = newCurrentSpeed;
     }
 
@@ -78,7 +75,7 @@ public abstract class Car implements Movable {
         return direction;
     }
 
-    public void setDierction(Direction newDirection) {
+    private void setDierction(Direction newDirection) {
         direction = newDirection;
     }
 
@@ -91,26 +88,29 @@ public abstract class Car implements Movable {
     }
     
     public void gas(double amount){
+        if (amount < 0 || amount > 1) throw new IllegalArgumentException();
         incrementSpeed(amount);
     }
 
     public void brake(double amount){
+        if (amount < 0 || amount > 1) throw new IllegalArgumentException();
         decrementSpeed(amount);
     }
 
     public void move() {
+        double speed = getCurrentSpeed();
         switch (direction) {
             case UP:
-                y += currentSpeed;
+                y += speed;
                 break;
             case RIGHT:
-                x += currentSpeed;
+                x += speed;
                 break;
             case DOWN:
-                y -= currentSpeed;
+                y -= speed;
                 break;
             case LEFT:
-                x -= currentSpeed;
+                x -= speed;
                 break;
         }
     }
@@ -118,16 +118,16 @@ public abstract class Car implements Movable {
     public void turnLeft() {
         switch (direction) {
             case UP:
-                direction = Direction.LEFT;
+                setDierction(Direction.LEFT);
                 break;
             case RIGHT:
-                direction = Direction.UP;
+                setDierction(Direction.UP);
                 break;
             case DOWN:
-                direction = Direction.RIGHT;
+                setDierction(Direction.RIGHT);
                 break;
             case LEFT:
-                direction = Direction.DOWN;
+                setDierction(Direction.DOWN);
                 break;
         }
     }
@@ -135,16 +135,16 @@ public abstract class Car implements Movable {
     public void turnRight() {
         switch (direction) {
             case UP:
-                direction = Direction.RIGHT;
+                setDierction(Direction.RIGHT);
                 break;
             case RIGHT:
-                direction = Direction.DOWN;
+                setDierction(Direction.DOWN);
                 break;
             case DOWN:
-                direction = Direction.LEFT;
+                setDierction(Direction.LEFT);
                 break;
             case LEFT:
-                direction = Direction.UP;
+                setDierction(Direction.UP);
                 break;
         }
     }
