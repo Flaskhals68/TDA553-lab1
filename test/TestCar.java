@@ -1,6 +1,7 @@
 package test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThrows;
 
 import org.junit.Test;
 
@@ -82,20 +83,13 @@ public class TestCar {
         saab.gas(0.75);
         assertEquals(0.9375, saab.getCurrentSpeed(), 0.0001);
 
-        boolean success = true;
-        try {
+        assertThrows(IllegalArgumentException.class,
+            ()->{
             volvo.gas(-1);
-        } catch (IllegalArgumentException e) {
-            success = false;
-        }
-        assertEquals(false, success);
-
-        success = true;
-        try {
+            });
+        assertThrows(IllegalArgumentException.class,
+            ()->{
             saab.gas(-1);
-        } catch (IllegalArgumentException e) {
-            success = false;
-        }
-        assertEquals(false, success);
+            });
     }
 }
