@@ -75,7 +75,7 @@ public abstract class Car implements Movable {
         return direction;
     }
 
-    private void setDierction(Direction newDirection) {
+    private void setDirection(Direction newDirection) {
         direction = newDirection;
     }
 
@@ -118,16 +118,16 @@ public abstract class Car implements Movable {
     public void turnLeft() {
         switch (direction) {
             case UP:
-                setDierction(Direction.LEFT);
+                setDirection(Direction.LEFT);
                 break;
             case RIGHT:
-                setDierction(Direction.UP);
+                setDirection(Direction.UP);
                 break;
             case DOWN:
-                setDierction(Direction.RIGHT);
+                setDirection(Direction.RIGHT);
                 break;
             case LEFT:
-                setDierction(Direction.DOWN);
+                setDirection(Direction.DOWN);
                 break;
         }
     }
@@ -135,16 +135,16 @@ public abstract class Car implements Movable {
     public void turnRight() {
         switch (direction) {
             case UP:
-                setDierction(Direction.RIGHT);
+                setDirection(Direction.RIGHT);
                 break;
             case RIGHT:
-                setDierction(Direction.DOWN);
+                setDirection(Direction.DOWN);
                 break;
             case DOWN:
-                setDierction(Direction.LEFT);
+                setDirection(Direction.LEFT);
                 break;
             case LEFT:
-                setDierction(Direction.UP);
+                setDirection(Direction.UP);
                 break;
         }
     }

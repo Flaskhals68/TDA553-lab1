@@ -1,8 +1,6 @@
 package main;
 import java.awt.*;
 
-import org.junit.Test;
-
 public class Saab95 extends Car{
 
     public boolean turboOn;
