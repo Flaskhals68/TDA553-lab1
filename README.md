@@ -1,5 +1,5 @@
 # Authors
 
-* Erik Erik Berglind
+* Erik Berglind
 * Noah Andreasson
 * Kalle Johansson

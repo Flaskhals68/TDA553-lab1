@@ -167,6 +167,24 @@ public class TestCar {
     }
 
     @Test
+    public void volvo_should_throw_exception_when_given_too_big_argument() {
+        Volvo240 volvo = new Volvo240(0, 0);
+        assertThrows(IllegalArgumentException.class,
+            ()-> {
+                volvo.gas(10);
+            });
+    }
+
+    @Test
+    public void saab_should_throw_exception_when_given_to_big_argument() {
+        Saab95 saab = new Saab95(0, 0);
+        assertThrows(IllegalArgumentException.class,
+            ()-> {
+                saab.gas(10);
+            });
+    }
+
+    @Test
     public void volvo_should_not_be_able_to_decrement_speed_under_zero() {
         Volvo240 volvo = new Volvo240(0, 0);
         volvo.gas(1);

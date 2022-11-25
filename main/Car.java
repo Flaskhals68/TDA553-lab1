@@ -2,11 +2,11 @@ package main;
 import java.awt.*;
 
 public abstract class Car implements Movable {
-    private int nrDoors; // Number of doors on the car
-    private double enginePower; // Engine power of the car
-    private double currentSpeed; // The current speed of the car
+    private final int nrDoors; // Number of doors on the car
+    private final double enginePower; // Engine power of the car
+    private final String modelName; // The car model name
     private Color color; // Color of the car
-    private String modelName; // The car model name
+    private double currentSpeed; // The current speed of the car
     private double x; // The x coordiante of the car
     private double y; // The y coordiante of the car
     private Direction direction; // The Enum Direction direction of the car (UP, DOWN, LEFT, RIGHT)
@@ -29,9 +29,17 @@ public abstract class Car implements Movable {
         DOWN,
     }
     
-    protected abstract void incrementSpeed(double amount);
+    private void incrementSpeed(double amount) {
+        if (amount < 0 || amount > 1) throw new IllegalArgumentException();
+        double currentSpeed = Math.min(getCurrentSpeed() + speedFactor() * amount, getEnginePower());
+        setCurrentSpeed(currentSpeed);
+    }
 
-    protected abstract void decrementSpeed(double amount);
+    private void decrementSpeed(double amount) {
+        if (amount < 0 || amount > 1) throw new IllegalArgumentException();
+        double currentSpeed = Math.max(getCurrentSpeed() - speedFactor() * amount, 0);
+        setCurrentSpeed(currentSpeed);
+    }
 
     protected abstract double speedFactor();
 
@@ -71,7 +79,7 @@ public abstract class Car implements Movable {
 	    color = clr;
     }
 
-    public Direction getDirection(){
+    public Direction getDirection() {
         return direction;
     }
 
@@ -79,21 +87,19 @@ public abstract class Car implements Movable {
         direction = newDirection;
     }
 
-    public void startEngine(){
+    public void startEngine() {
 	    currentSpeed = 0.1;
     }
 
-    public void stopEngine(){
+    public void stopEngine() {
 	    currentSpeed = 0;
     }
     
-    public void gas(double amount){
-        if (amount < 0 || amount > 1) throw new IllegalArgumentException();
+    public void gas(double amount) {
         incrementSpeed(amount);
     }
 
-    public void brake(double amount){
-        if (amount < 0 || amount > 1) throw new IllegalArgumentException();
+    public void brake(double amount) {
         decrementSpeed(amount);
     }
 
